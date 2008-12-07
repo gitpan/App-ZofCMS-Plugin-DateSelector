@@ -3,7 +3,7 @@ package App::ZofCMS::Plugin::DateSelector;
 use warnings;
 use strict;
 
-our $VERSION = '0.0101';
+our $VERSION = '0.0111';
 
 use HTML::Template;
 use Time::Local qw/timelocal/;
@@ -48,7 +48,8 @@ sub process {
             end             => time() + 30000000,
             interval_step   => 'minute',
             interval_max    => 'year',
-
+            minute_step     => 5,
+            second_step     => 10,
             %$selector,
         };
 
@@ -241,6 +242,8 @@ sub _prepare_minute {
         @out = 0..59;
     }
 
+    @out = grep { not $_ % $s->{minute_step} } @out;
+
     my $q_value = $q->{ $s->{q_name} . '_' . 'minute' };
     return [
         map +{
@@ -273,6 +276,8 @@ sub _prepare_second {
     else {
         @out = 0..59;
     }
+
+    @out = grep { not $_ % $s->{second_step} } @out;
 
     my $q_value = $q->{ $s->{q_name} . '_' . 'second' };
     return [
@@ -526,6 +531,24 @@ B<Optional>. Specifies the maximum unit of time the user would be able to select
 Valid values (all lowercase) are as follows: C<year>, C<month>, C<day>, C<hour>,
 C<minute> and C<second>. B<Defaults to:> C<year>
 
+=head3 C<minute_step>
+
+    minute_step => 5,
+
+B<Optional>. Specifies the "step" of minutes to display, in other words, when C<minute_step>
+is set to C<10>, then in the "minutes" C<< <select> >>
+the plugin will generate only C<< <option> >>s 0, 10, 20, 30, 40 and 50. B<Defaults to:>
+C<5> (increments of 5 minutes).
+
+=head3 C<second_step>
+
+    second_step => 10,
+
+B<Optional>. Specifies the "step" of seconds to display, in other words, when C<second_step>
+is set to C<10>, then in the "minutes" C<< <select> >>
+the plugin will generate only C<< <option> >>s 0, 10, 20, 30, 40 and 50. B<Defaults to:>
+C<5> (increments of 5 minutes).
+
 =head1 HTML::Template VARIABLES
 
 See description of C<t_name> argument above. The value of C<t_name> specifies the name
@@ -544,14 +567,12 @@ The following is a sample of the generated code with all the defaults left intac
 
     <select name="date_month" class="date_selector">
         <option value="0" selected>January</option>
-
         <option value="1">February</option>
         <option value="2">March</option>
         <option value="3">April</option>
         <option value="4">May</option>
         <option value="5">June</option>
         <option value="6">July</option>
-
         <option value="7">August</option>
         <option value="8">September</option>
         <option value="9">October</option>
@@ -566,35 +587,30 @@ The following is a sample of the generated code with all the defaults left intac
         <option value="4">Day: 4</option>
         <option value="5">Day: 5</option>
         <option value="6">Day: 6</option>
-
         <option value="7">Day: 7</option>
         <option value="8">Day: 8</option>
         <option value="9">Day: 9</option>
         <option value="10">Day: 10</option>
         <option value="11">Day: 11</option>
         <option value="12">Day: 12</option>
-
         <option value="13">Day: 13</option>
         <option value="14">Day: 14</option>
         <option value="15">Day: 15</option>
         <option value="16">Day: 16</option>
         <option value="17">Day: 17</option>
         <option value="18">Day: 18</option>
-
         <option value="19">Day: 19</option>
         <option value="20">Day: 20</option>
         <option value="21">Day: 21</option>
         <option value="22">Day: 22</option>
         <option value="23">Day: 23</option>
         <option value="24">Day: 24</option>
-
         <option value="25">Day: 25</option>
         <option value="26">Day: 26</option>
         <option value="27">Day: 27</option>
         <option value="28">Day: 28</option>
         <option value="29">Day: 29</option>
         <option value="30">Day: 30</option>
-
         <option value="31">Day: 31</option>
     </select>
 
@@ -603,103 +619,41 @@ The following is a sample of the generated code with all the defaults left intac
         <option value="1">Hour: 1</option>
         <option value="2">Hour: 2</option>
         <option value="3">Hour: 3</option>
-
         <option value="4">Hour: 4</option>
         <option value="5">Hour: 5</option>
         <option value="6">Hour: 6</option>
         <option value="7">Hour: 7</option>
         <option value="8">Hour: 8</option>
         <option value="9">Hour: 9</option>
-
         <option value="10">Hour: 10</option>
         <option value="11">Hour: 11</option>
         <option value="12">Hour: 12</option>
         <option value="13">Hour: 13</option>
         <option value="14">Hour: 14</option>
         <option value="15">Hour: 15</option>
-
         <option value="16">Hour: 16</option>
         <option value="17">Hour: 17</option>
         <option value="18">Hour: 18</option>
         <option value="19">Hour: 19</option>
         <option value="20">Hour: 20</option>
         <option value="21">Hour: 21</option>
-
         <option value="22">Hour: 22</option>
         <option value="23">Hour: 23</option>
     </select>
 
     <select name="date_minute" class="date_selector">
         <option value="0" selected>Minute: 00</option>
-        <option value="1">Minute: 01</option>
-        <option value="2">Minute: 02</option>
-
-        <option value="3">Minute: 03</option>
-        <option value="4">Minute: 04</option>
         <option value="5">Minute: 05</option>
-        <option value="6">Minute: 06</option>
-        <option value="7">Minute: 07</option>
-        <option value="8">Minute: 08</option>
-
-        <option value="9">Minute: 09</option>
         <option value="10">Minute: 10</option>
-        <option value="11">Minute: 11</option>
-        <option value="12">Minute: 12</option>
-        <option value="13">Minute: 13</option>
-        <option value="14">Minute: 14</option>
-
         <option value="15">Minute: 15</option>
-        <option value="16">Minute: 16</option>
-        <option value="17">Minute: 17</option>
-        <option value="18">Minute: 18</option>
-        <option value="19">Minute: 19</option>
         <option value="20">Minute: 20</option>
-
-        <option value="21">Minute: 21</option>
-        <option value="22">Minute: 22</option>
-        <option value="23">Minute: 23</option>
-        <option value="24">Minute: 24</option>
         <option value="25">Minute: 25</option>
-        <option value="26">Minute: 26</option>
-
-        <option value="27">Minute: 27</option>
-        <option value="28">Minute: 28</option>
-        <option value="29">Minute: 29</option>
         <option value="30">Minute: 30</option>
-        <option value="31">Minute: 31</option>
-        <option value="32">Minute: 32</option>
-
-        <option value="33">Minute: 33</option>
-        <option value="34">Minute: 34</option>
         <option value="35">Minute: 35</option>
-        <option value="36">Minute: 36</option>
-        <option value="37">Minute: 37</option>
-        <option value="38">Minute: 38</option>
-
-        <option value="39">Minute: 39</option>
         <option value="40">Minute: 40</option>
-        <option value="41">Minute: 41</option>
-        <option value="42">Minute: 42</option>
-        <option value="43">Minute: 43</option>
-        <option value="44">Minute: 44</option>
-
         <option value="45">Minute: 45</option>
-        <option value="46">Minute: 46</option>
-        <option value="47">Minute: 47</option>
-        <option value="48">Minute: 48</option>
-        <option value="49">Minute: 49</option>
         <option value="50">Minute: 50</option>
-
-        <option value="51">Minute: 51</option>
-        <option value="52">Minute: 52</option>
-        <option value="53">Minute: 53</option>
-        <option value="54">Minute: 54</option>
         <option value="55">Minute: 55</option>
-        <option value="56">Minute: 56</option>
-
-        <option value="57">Minute: 57</option>
-        <option value="58">Minute: 58</option>
-        <option value="59">Minute: 59</option>
     </select>
 
 =head1 AUTHOR

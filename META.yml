@@ -1,6 +1,6 @@
 ---
 name: App-ZofCMS-Plugin-DateSelector
-version: 0.0101
+version: 0.0111
 author:
   - "Zoffix <'zoffix@cpan.org'>"
 abstract: plugin to generate and "parse" <select>s for date/time input
@@ -16,7 +16,7 @@ build_requires:
 provides:
   App::ZofCMS::Plugin::DateSelector:
     file: lib/App/ZofCMS/Plugin/DateSelector.pm
-    version: 0.0101
+    version: 0.0111
 generated_by: Module::Build version 0.2808
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
