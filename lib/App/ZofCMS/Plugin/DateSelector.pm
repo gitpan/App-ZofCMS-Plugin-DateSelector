@@ -3,7 +3,7 @@ package App::ZofCMS::Plugin::DateSelector;
 use warnings;
 use strict;
 
-our $VERSION = '0.0111';
+our $VERSION = '0.0112';
 
 use HTML::Template;
 use Time::Local qw/timelocal/;

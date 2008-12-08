@@ -1,5 +1,8 @@
 Revision history for App-ZofCMS-Plugin-DateSelector
 
+0.0112  December 6, 2008
+        Fixed broken MANIFEST
+
 0.0111  December 6, 2008
         Added 'minute_step' and 'second_step' options.
 

@@ -1,0 +1,22 @@
+{
+    body => \'index.tmpl',
+    title => 'Home',
+
+    plugins => [ { DateSelector => 2000 }, { Sub => 3000 } ],
+
+    plug_date_selector => {
+        class           => 'date_selector',
+        id              => 'date_selector',
+        q_name          => 'date',
+        t_name          => 'date_selector',
+        start           => 1029561369,
+        end             => 1229661369,
+        interval_step   => 'minute',
+        interval_max    => 'year',
+    },
+
+    plug_sub => sub {
+        my $t = shift;
+        $t->{t}{DATE} = "[$t->{d}{date_selector}{localtime})]";
+    },
+}
