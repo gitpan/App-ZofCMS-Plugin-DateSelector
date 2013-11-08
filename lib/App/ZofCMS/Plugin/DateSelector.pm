@@ -3,10 +3,10 @@ package App::ZofCMS::Plugin::DateSelector;
 use warnings;
 use strict;
 
-our $VERSION = '0.0112';
+our $VERSION = '0.0113';
 
 use HTML::Template;
-use Time::Local qw/timelocal/;
+use Time::Local (qw/timelocal/);
 
 my %Options_Dispatch = (
     year    => \&_prepare_year,
@@ -17,10 +17,10 @@ my %Options_Dispatch = (
     second  => \&_prepare_second,
 );
 
-my @Months = qw/
+my @Months = (qw/
     January February March     April   May      June
     July    August   September October November December
-/;
+/);
 
 sub new { bless {}, shift; }
 
@@ -307,6 +307,8 @@ TEMPLATE_END
 
 1;
 __END__
+
+=encoding utf8
 
 =head1 NAME
 

@@ -17,7 +17,9 @@ my $builder = Module::Build->new(
         'App::ZofCMS'               => 0.0111,
         'HTML::Template'            => 2.9,
         'Time::Local' => 1.11,
+        'perl'        => '5.006',
     },
+    configure_requires => { 'Module::Build' => 0 },
     add_to_cleanup      => [ 'App-ZofCMS-Plugin-DateSelector-*' ],
     create_makefile_pl => 'traditional',
 );

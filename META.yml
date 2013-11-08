@@ -1,23 +1,27 @@
 ---
-name: App-ZofCMS-Plugin-DateSelector
-version: 0.0112
+abstract: "plugin to generate and \"parse\" <select>s for date/time input"
 author:
   - "Zoffix <'zoffix@cpan.org'>"
-abstract: plugin to generate and "parse" <select>s for date/time input
+build_requires:
+  Test::More: 0
+configure_requires:
+  Module::Build: 0
+dynamic_config: 1
+generated_by: 'Module::Build version 0.4007, CPAN::Meta::Converter version 2.132830'
 license: perl
-resources:
-  license: http://dev.perl.org/licenses/
+meta-spec:
+  url: http://module-build.sourceforge.net/META-spec-v1.4.html
+  version: 1.4
+name: App-ZofCMS-Plugin-DateSelector
+provides:
+  App::ZofCMS::Plugin::DateSelector:
+    file: lib/App/ZofCMS/Plugin/DateSelector.pm
+    version: 0.0113
 requires:
   App::ZofCMS: 0.0111
   HTML::Template: 2.9
   Time::Local: 1.11
-build_requires:
-  Test::More: 0
-provides:
-  App::ZofCMS::Plugin::DateSelector:
-    file: lib/App/ZofCMS/Plugin/DateSelector.pm
-    version: 0.0112
-generated_by: Module::Build version 0.2808
-meta-spec:
-  url: http://module-build.sourceforge.net/META-spec-v1.2.html
-  version: 1.2
+  perl: 5.006
+resources:
+  license: http://dev.perl.org/licenses/
+version: 0.0113

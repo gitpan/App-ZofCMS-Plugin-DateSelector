@@ -1,9 +1,11 @@
 App-ZofCMS-Plugin-DateSelector
 
-The module is a plugin for L<App::ZofCMS> that provides means to generate several
-C<< <select> >> elements for date and time selection by the user. Plugin also provides means
-to "parse" those C<< <select> >>s from the query to generate either epoch time, same string
-as C<localtime()> or access each selection individually from a hashref.
+The module is a plugin for L<App::ZofCMS> that provides means to
+generate several C<< <select> >> elements for date and time selection
+by the user. Plugin also provides means to "parse" those
+C<< <select> >>s from the query to generate either epoch time, same
+string as C<localtime()> or access each selection individually
+from a hashref.
 
 INSTALLATION
 
